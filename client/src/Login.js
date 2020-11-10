@@ -52,7 +52,7 @@ const Login = () => {
                 </FormGroup>
             
                 <Button block bsSize="large" disabled={!validateForm()} type="submit">
-                Register
+                Login
                 </Button>
             </form>
         </div>
