@@ -7,23 +7,32 @@ router.use(express.json());
 // Create an event
 router.post("/create", (req, res) => {
   let body = req.body;
-  let userId = body.userId;
-  let eventName = body.name;
-  let eventDescription = body.description;
-  let eventDate = body.date;
+  let {
+    eventId,
+    userId,
+    title: eventTitle,
+    description: eventDescription,
+    startDate: eventStartDate,
+    endDate: eventEndDate,
+    deleted,
+    type: eventType,
+  } = req.body;
 
   if (
-    !body.hasOwnProperty("name") ||
+    !body.hasOwnProperty("eventId") ||
+    !body.hasOwnProperty("title") ||
     !body.hasOwnProperty("description") ||
-    !body.hasOwnProperty("date")
+    !body.hasOwnProperty("startDate") ||
+    !body.hasOwnProperty("endDate") ||
+    !body.hasOwnProperty("type")
   ) {
     return res.sendStatus(400);
   }
 
   pool
     .query(
-      "INSERT INTO events(user_id, name, description, date) VALUES($1, $2, $3, $4) RETURNING *",
-      [userId, eventName, eventDescription, eventDate]
+      "INSERT INTO events(event_id, user_id, title, description, start_date, end_date, deleted, type) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *",
+      [eventId, userId, eventTitle, eventDescription, eventStartDate, eventEndDate, deleted, eventType]
     )
     .then((response) => {
       res.status(200).send();
@@ -38,13 +47,14 @@ router.get("/:userId", (req, res, next) => {
   let body = req.body;
   let { userId } = req.params;
 
-  pool.query("SELECT * FROM EVENTS WHERE user_id = $1", [userId])
-  .then(response => {
-    res.status(200).json({"events": response.rows});
-  })
-  .catch((error) => {
-    res.sendStatus(500);
-  });
+  pool
+    .query("SELECT * FROM EVENTS WHERE user_id = $1", [userId])
+    .then((response) => {
+      res.status(200).json({ events: response.rows });
+    })
+    .catch((error) => {
+      res.sendStatus(500);
+    });
 });
 
 module.exports = router;
