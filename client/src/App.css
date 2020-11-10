@@ -1,0 +1,39 @@
+.App {
+  text-align: center;
+}
+
+nav{
+  display: flex;
+  justify-content: space-between;
+  padding-left: 5%;
+  align-items: center; 
+  min-height: 15vh; 
+  background: darkgray;
+  color: white;
+}
+
+.nav-links {
+  width: 20%;
+  display: flex; 
+  justify-content: space-around;
+  float:right;
+  align-items: center;
+  list-style: none;
+}
+
+.userPassDiv{
+  background-color: lightgray;
+  position: absolute;
+  border-radius: 25px;
+  top: 30%;
+  left: 50%;
+  margin-left: -20%;
+  width: 40%;
+  height: 50%;
+}
+
+.registerForm {
+  position: absolute;
+  width: 100%;
+  padding: 5%;
+}
