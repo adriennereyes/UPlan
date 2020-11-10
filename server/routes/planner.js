@@ -33,10 +33,18 @@ router.post("/create", (req, res) => {
     });
 });
 
-// TODO: Display all events
-router.get("/", (req, res, next) => {
-  res.send("working");
-  next();
+// Display all events
+router.get("/:userId", (req, res, next) => {
+  let body = req.body;
+  let { userId } = req.params;
+
+  pool.query("SELECT * FROM EVENTS WHERE user_id = $1", [userId])
+  .then(response => {
+    res.status(200).json({"events": response.rows});
+  })
+  .catch((error) => {
+    res.sendStatus(500);
+  });
 });
 
 module.exports = router;
