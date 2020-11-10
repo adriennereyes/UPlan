@@ -45,7 +45,7 @@ const Login = () => {
                     <ControlLabel>Password</ControlLabel>
                     <FormControl 
                     id = "password" 
-                    type = "text" 
+                    type = "password" 
                     className ="mt-2" 
                     value={password} 
                     onChange={e => setPassword(e.target.value)} />
