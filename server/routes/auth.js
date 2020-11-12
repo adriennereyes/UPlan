@@ -6,8 +6,8 @@ router.post('/login', (req, res) => {
     res.send("Working");
 })
 
-// TODO: Sign up new user
-router.post('/signup', (req, res) => {
+// TODO: Register new user
+router.post('/register', (req, res) => {
     res.send("working")
 })
 

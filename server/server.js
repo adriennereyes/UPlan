@@ -1,7 +1,7 @@
 const express = require("express");
 const pool = require("./db");
 const authRouter = require("./routes/auth");
-const eventRouter = require("./routes/planner");
+const plannerRouter = require("./routes/planner");
 
 const app = express();
 
@@ -13,7 +13,7 @@ app.use(express.json());
 
 // ROUTES //
 app.use('/', authRouter);
-app.use('/planner', eventRouter);
+app.use('/planner', plannerRouter);
 
 
 
