@@ -34,7 +34,7 @@ const Login = () => {
         <div className = "userPassDiv">
             <form  className = "registerForm" onSubmit ={Login}>
                 <FormGroup controlId="username" bsSize="large">
-                    <ControlLabel>Username</ControlLabel>
+                    <ControlLabel >Username</ControlLabel>
                     <FormControl
                     id = "username" 
                     type = "text" 
