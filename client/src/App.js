@@ -24,7 +24,7 @@ function App() {
             <Route path="/login" component={Login}  />
             <Route path="/register" component={Register} />
             <Route path="/empty" component={Empty} />
-            <Route path="/event" component={Event}
+            <Route path="/event" component={Event} />
           </Switch>
         </div>
       </Router>
