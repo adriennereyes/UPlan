@@ -34,7 +34,7 @@ const Register = () => {
         <div className = "userPassDiv">
             <form  className = "registerForm" onSubmit ={Register}>
                 <FormGroup controlId="username" bsSize="large">
-                    <ControlLabel>Create Username</ControlLabel>
+                    <ControlLabel id="label">Create Username</ControlLabel>
                     <FormControl
                     id = "username" 
                     type = "text" 
@@ -42,7 +42,7 @@ const Register = () => {
                     onChange={e => setUsername(e.target.value)} />
                 </FormGroup>
                 <FormGroup controlId="password" bsSize="large">
-                    <ControlLabel>Create Password</ControlLabel>
+                    <ControlLabel id="label">Create Password</ControlLabel>
                     <FormControl 
                     id = "password" 
                     type = "password" 
