@@ -34,7 +34,7 @@ const Login = () => {
         <div className = "userPassDiv">
             <form  className = "registerForm" onSubmit ={Login}>
                 <FormGroup controlId="username" bsSize="large">
-                    <ControlLabel >Username</ControlLabel>
+                    <ControlLabel id="label">Username</ControlLabel>
                     <FormControl
                     id = "username" 
                     type = "text" 
@@ -42,7 +42,7 @@ const Login = () => {
                     onChange={e => setUsername(e.target.value)} />
                 </FormGroup>
                 <FormGroup controlId="password" bsSize="large">
-                    <ControlLabel>Password</ControlLabel>
+                    <ControlLabel id="label">Password</ControlLabel>
                     <FormControl 
                     id = "password" 
                     type = "password" 
