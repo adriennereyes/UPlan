@@ -13,6 +13,8 @@ CREATE TABLE planner."Users"
 ALTER TABLE planner."Users"
     OWNER to postgres;
 
+CREATE TYPE event as ENUM ('Class', 'Meeting', 'Task', 'Reminder');
+
 CREATE TABLE planner."Events"
 (
     "EventID" integer NOT NULL,
@@ -22,7 +24,7 @@ CREATE TABLE planner."Events"
     "StartDate" date NOT NULL,
     "EndDate" date,
     "Deleted" boolean,
-    "EventType" integer NOT NULL,
+    "EventType" event NOT NULL,
     PRIMARY KEY ("EventID"),
     CONSTRAINT "UserID" FOREIGN KEY ("EventID")
         REFERENCES planner."Users" ("UserID") MATCH SIMPLE
