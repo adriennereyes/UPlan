@@ -2,6 +2,7 @@
   /* text-align: center; */
 }
 
+
 nav{
   display: flex;
   justify-content: space-between;
@@ -22,9 +23,11 @@ nav{
 }
 
 .userPassDiv{
-  background-color: lightgray;
+
   position: absolute;
-  border-radius: 25px;
+  background:  #fefefe; 
+  display:  flex; 
+  flex-direction:  column; 
   top: 30%;
   left: 50%;
   margin-left: -20%;
@@ -36,4 +39,19 @@ nav{
   position: absolute;
   width: 100%;
   padding: 5%;
+}
+
+#label {
+  float: left;
+}
+
+
+#username {
+  border:  none; 
+  border-bottom:  solid 1px
+}
+
+#password {
+  border:  none; 
+  border-bottom:  solid 1px
 }
