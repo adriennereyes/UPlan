@@ -15,6 +15,7 @@ import "./event.css";
 function Event() {
   //Sets the original state of the form fields
   const [title, setTitle] = useState("");
+  const [type, setType] = useState("");
   const [startMonth, setStartMonth] = useState("");
   const [startDay, setStartDay] = useState("");
   const [startYear, setStartYear] = useState("");
@@ -23,12 +24,15 @@ function Event() {
   const [endDay, setEndDay] = useState("");
   const [endYear, setEndYear] = useState("");
   const [endTime, setEndTime] = useState("");
-
   const [description, setDescription] = useState("");
+
+  //Validates User Input:
+  function validateInput() {}
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  };
   //Sends a POST request to the server of all of the form data
-  function add() {
-    console.log("Great!");
-  }
+  function add() {}
   return (
     <>
       <div class="eventDiv">
@@ -48,6 +52,25 @@ function Event() {
                 ></FormControl>
               </FormGroup>
             </Col>
+            <Col sm="12">
+              <FormGroup bsSize="large">
+                <ControlLabel>Event Type</ControlLabel>
+                <select
+                  className="form-control"
+                  id="type"
+                  value={type}
+                  onChange={(e) => setType(e.target.value)}
+                >
+                  <option selected value="">
+                    Choose..
+                  </option>
+                  <option value="School">School</option>
+                  <option value="Work">Work</option>
+                  <option value="Appointment">Appointment</option>
+                  <option value="Party">Party</option>
+                </select>
+              </FormGroup>
+            </Col>
             <Col sm="3">
               <FormGroup bsSize="large">
                 <ControlLabel>Start Month</ControlLabel>
@@ -57,6 +80,7 @@ function Event() {
                   value={startMonth}
                   onChange={(e) => setStartMonth(e.target.value)}
                 >
+                  <option selected></option>
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
@@ -81,6 +105,7 @@ function Event() {
                   value={startDay}
                   onChange={(e) => setStartDay(e.target.value)}
                 >
+                  <option selected></option>
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
@@ -146,6 +171,8 @@ function Event() {
                   value={endMonth}
                   onChange={(e) => setEndMonth(e.target.value)}
                 >
+                  <option selected> </option>
+
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
@@ -170,6 +197,8 @@ function Event() {
                   value={endDay}
                   onChange={(e) => setEndDay(e.target.value)}
                 >
+                  <option selected value="Choose"></option>
+
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
@@ -239,7 +268,12 @@ function Event() {
             </Col>
           </Row>
 
-          <Button blockbSize="large" variant="secondary" type="submit">
+          <Button
+            blockbSize="large"
+            variant="primary"
+            type="button"
+            onClick={add}
+          >
             Add Event
           </Button>
         </Form>
