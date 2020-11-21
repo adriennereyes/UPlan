@@ -12,6 +12,7 @@ import Register from "./Register";
 import Nav from "./Nav";
 import Empty from "./empty";
 import Event from "./Event";
+import Planner from "./planner";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="/register" component={Register} />
             <Route path="/empty" component={Empty} />
             <Route path="/event" component={Event} />
+            <Route path="/planner" component={Planner} />
           </Switch>
         </div>
       </Router>
