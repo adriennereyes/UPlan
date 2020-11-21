@@ -1,37 +1,35 @@
 CREATE SCHEMA planner
     AUTHORIZATION postgres;
 
-CREATE TABLE planner."Users"
+CREATE TABLE planner.Users
 (
-    "UserID" integer NOT NULL,
-    "UserName" text NOT NULL,
-    "Password" text NOT NULL,
-    PRIMARY KEY ("UserID"),
-    CONSTRAINT "UserName" UNIQUE ("UserName")
+    user_id INT GENERATED ALWAYS AS IDENTITY NOT NULL,
+    username text NOT NULL,
+    password text NOT NULL,
+    PRIMARY KEY (user_id),
+    CONSTRAINT username UNIQUE (username)
 );
 
-ALTER TABLE planner."Users"
+ALTER TABLE planner.Users
     OWNER to postgres;
 
 CREATE TYPE event as ENUM ('Class', 'Meeting', 'Task', 'Reminder');
 
-CREATE TABLE planner."Events"
+CREATE TABLE planner.Events
 (
-    "EventID" integer NOT NULL,
-    "UserID" integer NOT NULL,
-    "Title" text,
-    "Description" text,
-    "StartDate" date NOT NULL,
-    "EndDate" date,
-    "Deleted" boolean,
-    "EventType" event NOT NULL,
-    PRIMARY KEY ("EventID"),
-    CONSTRAINT "UserID" FOREIGN KEY ("EventID")
-        REFERENCES planner."Users" ("UserID") MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-        NOT VALID
+    event_id INT GENERATED ALWAYS AS IDENTITY NOT NULL,
+    user_id integer NOT NULL,
+    title text,
+    description text,
+    start_date date NOT NULL,
+    end_date date,
+    deleted boolean,
+    type event NOT NULL,
+    PRIMARY KEY (event_id),
+    CONSTRAINT fk_user 
+        FOREIGN KEY (user_id)
+        REFERENCES planner.Users(user_id)
 );
 
-ALTER TABLE planner."Events"
+ALTER TABLE planner.Events
     OWNER to postgres;
