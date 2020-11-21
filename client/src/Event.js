@@ -64,7 +64,6 @@ function Event() {
     //If input is valid, send a POST request
     if (validateInput()) {
       console.log("Yay!");
-
       fetch("/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
