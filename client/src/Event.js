@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Form,
@@ -11,44 +11,91 @@ import {
 
 import "./event.css";
 
-//Function that handles Event component
+//Function that creates Event component
+
 function Event() {
   //Sets the original state of the form fields
-  const [title, setTitle] = useState("");
-  const [type, setType] = useState("");
-  const [startMonth, setStartMonth] = useState("");
-  const [startDay, setStartDay] = useState("");
-  const [startYear, setStartYear] = useState("");
-  const [startTime, setStartTime] = useState("");
-  const [endMonth, setEndMonth] = useState("");
-  const [endDay, setEndDay] = useState("");
-  const [endYear, setEndYear] = useState("");
-  const [endTime, setEndTime] = useState("");
-  const [description, setDescription] = useState("");
+  const [fields, setfields] = useState({
+    title: "",
+    type: "",
+    startMonth: "",
+    startDay: "",
+    startYear: "",
+    startTime: "",
+    endMonth: "",
+    endDay: "",
+    endYear: "",
+    endTime: "",
+    description: "",
+  });
 
-  //Validates User Input:
-  function validateInput() {}
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  //Updates the text input in the fields
+  const handleChange = (e) => {
+    setfields({
+      ...fields,
+      [e.target.name]: e.target.value,
+    });
   };
+
+  //Validates User Input to see if anything was entered
+  function validateInput() {
+    let formValid = true;
+
+    for (const field in fields) {
+      if (fields[field].length === 0) {
+        formValid = false;
+      }
+    }
+    return formValid;
+  }
+
   //Sends a POST request to the server of all of the form data
-  function add() {}
+  const submitEvent = async (e) => {
+    e.preventDefault();
+
+    const body = {
+      title: fields.title,
+      description: fields.description,
+      startDate: `${fields.startMonth}/${fields.startDay}/${fields.startYear}`,
+      endDate: `${fields.endMonth}/${fields.endDay}/${fields.endYear}`,
+      type: fields.type,
+    };
+
+    //If input is valid, send a POST request
+    if (validateInput()) {
+      console.log("Yay!");
+      
+      fetch("/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      })
+        .then((response) => {
+          console.log(response.json);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
+  //The HTML form loaded to the webpage
   return (
     <>
       <div class="eventDiv">
         <div class="header text-center">
           <h1>Add Event</h1>
         </div>
-        <Form onSubmit={add}>
+        <Form onSubmit={submitEvent}>
           <Row>
             <Col sm="12">
               <FormGroup bsSize="large">
                 <ControlLabel>Title</ControlLabel>
                 <FormControl
                   controlId="title"
+                  name="title"
                   type="text"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
+                  value={fields.title}
+                  onChange={handleChange}
                 ></FormControl>
               </FormGroup>
             </Col>
@@ -58,8 +105,9 @@ function Event() {
                 <select
                   className="form-control"
                   id="type"
-                  value={type}
-                  onChange={(e) => setType(e.target.value)}
+                  name="type"
+                  value={fields.type}
+                  onChange={handleChange}
                 >
                   <option selected value="">
                     Choose..
@@ -76,9 +124,10 @@ function Event() {
                 <ControlLabel>Start Month</ControlLabel>
                 <select
                   className="form-control"
-                  id="start-month"
-                  value={startMonth}
-                  onChange={(e) => setStartMonth(e.target.value)}
+                  name="startMonth"
+                  id="startMonth"
+                  value={fields.startMonth}
+                  onChange={handleChange}
                 >
                   <option selected></option>
                   <option value="1">1</option>
@@ -102,8 +151,9 @@ function Event() {
                 <select
                   className="form-control"
                   id="start-day"
-                  value={startDay}
-                  onChange={(e) => setStartDay(e.target.value)}
+                  name="startDay"
+                  value={fields.startDay}
+                  onChange={handleChange}
                 >
                   <option selected></option>
                   <option value="1">1</option>
@@ -146,8 +196,9 @@ function Event() {
                 <FormControl
                   controlId="start-year"
                   type="text"
-                  value={startYear}
-                  onChange={(e) => setStartYear(e.target.value)}
+                  name="startYear"
+                  value={fields.startYear}
+                  onChange={handleChange}
                 ></FormControl>
               </FormGroup>
             </Col>
@@ -157,8 +208,9 @@ function Event() {
                 <FormControl
                   controlId="start-time"
                   type="time"
-                  value={startTime}
-                  onChange={(e) => setStartTime(e.target.value)}
+                  name="startTime"
+                  value={fields.startTime}
+                  onChange={handleChange}
                 ></FormControl>
               </FormGroup>
             </Col>
@@ -168,8 +220,9 @@ function Event() {
                 <select
                   className="form-control"
                   id="end-month"
-                  value={endMonth}
-                  onChange={(e) => setEndMonth(e.target.value)}
+                  name="endMonth"
+                  value={fields.endMonth}
+                  onChange={handleChange}
                 >
                   <option selected> </option>
 
@@ -194,8 +247,9 @@ function Event() {
                 <select
                   className="form-control"
                   id="end-day"
-                  value={endDay}
-                  onChange={(e) => setEndDay(e.target.value)}
+                  name="endDay"
+                  value={fields.endDay}
+                  onChange={handleChange}
                 >
                   <option selected value="Choose"></option>
 
@@ -239,8 +293,9 @@ function Event() {
                 <FormControl
                   controlId="end-year"
                   type="text"
-                  value={endYear}
-                  onChange={(e) => setEndYear(e.target.value)}
+                  name="endYear"
+                  value={fields.endYear}
+                  onChange={handleChange}
                 ></FormControl>
               </FormGroup>
             </Col>
@@ -250,8 +305,9 @@ function Event() {
                 <FormControl
                   controlId="end-time"
                   type="time"
-                  value={endTime}
-                  onChange={(e) => setEndTime(e.target.value)}
+                  name="endTime"
+                  value={fields.endTime}
+                  onChange={handleChange}
                 ></FormControl>
               </FormGroup>
             </Col>
@@ -261,19 +317,15 @@ function Event() {
                 <FormControl
                   controlId="description"
                   type="text"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
+                  name="description"
+                  value={fields.description}
+                  onChange={handleChange}
                 ></FormControl>
               </FormGroup>
             </Col>
           </Row>
 
-          <Button
-            blockbSize="large"
-            variant="primary"
-            type="button"
-            onClick={add}
-          >
+          <Button blockbSize="large" variant="primary" type="submit">
             Add Event
           </Button>
         </Form>
