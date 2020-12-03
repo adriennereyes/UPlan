@@ -8,6 +8,7 @@ import {
   Row,
   Col,
 } from "react-bootstrap";
+import { Redirect } from "react-router-dom";
 
 import "./event.css";
 
@@ -63,18 +64,17 @@ function Event() {
 
     //If input is valid, send a POST request
     if (validateInput()) {
-      console.log("Yay!");
-      fetch("/create", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      })
-        .then((response) => {
-          console.log(response.json);
-        })
-        .catch((error) => {
-          console.log(error);
+      console.log("The form has been submitted");
+      try {
+        const response = await fetch("http://localhost:3001/planner/create", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
         });
+        const serverRes = await response.json();
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
   //The HTML form loaded to the webpage
@@ -118,7 +118,7 @@ function Event() {
                 </select>
               </FormGroup>
             </Col>
-            <Col sm="3">
+            <Col sm="4">
               <FormGroup bsSize="large">
                 <ControlLabel>Start Month</ControlLabel>
                 <select
@@ -144,7 +144,7 @@ function Event() {
                 </select>
               </FormGroup>
             </Col>
-            <Col sm="3">
+            <Col sm="4">
               <FormGroup bsSize="large">
                 <ControlLabel>Start Day</ControlLabel>
                 <select
@@ -189,7 +189,7 @@ function Event() {
                 </select>
               </FormGroup>
             </Col>
-            <Col sm="3">
+            <Col sm="4">
               <FormGroup bsSize="large">
                 <ControlLabel>Start Year</ControlLabel>
                 <FormControl
@@ -201,7 +201,7 @@ function Event() {
                 ></FormControl>
               </FormGroup>
             </Col>
-            <Col sm="3">
+            {/* <Col sm="3">
               <FormGroup bsSize="large">
                 <ControlLabel>Start Time</ControlLabel>
                 <FormControl
@@ -212,8 +212,8 @@ function Event() {
                   onChange={handleChange}
                 ></FormControl>
               </FormGroup>
-            </Col>
-            <Col sm="3">
+            </Col> */}
+            <Col sm="4">
               <FormGroup bsSize="large">
                 <ControlLabel>End Month</ControlLabel>
                 <select
@@ -240,7 +240,7 @@ function Event() {
                 </select>
               </FormGroup>
             </Col>
-            <Col sm="3">
+            <Col sm="4">
               <FormGroup bsSize="large">
                 <ControlLabel>End Day</ControlLabel>
                 <select
@@ -286,7 +286,7 @@ function Event() {
                 </select>
               </FormGroup>
             </Col>
-            <Col sm="3">
+            <Col sm="4">
               <FormGroup bsSize="large">
                 <ControlLabel>End Year</ControlLabel>
                 <FormControl
@@ -298,7 +298,7 @@ function Event() {
                 ></FormControl>
               </FormGroup>
             </Col>
-            <Col sm="3">
+            {/* <Col sm="3">
               <FormGroup bsSize="large">
                 <ControlLabel>End Time</ControlLabel>
                 <FormControl
@@ -309,7 +309,7 @@ function Event() {
                   onChange={handleChange}
                 ></FormControl>
               </FormGroup>
-            </Col>
+            </Col> */}
             <Col sm="12">
               <FormGroup bsSize="large">
                 <ControlLabel>Description</ControlLabel>

@@ -83,22 +83,22 @@ function App() {
               }
             />
             <Route
-              path="/planner/event"
+              path="/planner"
               exact
               render={(props) =>
                 isAuthenticated ? (
-                  <Event {...props} setAuth={setAuth} />
+                  <Planner {...props} setAuth={setAuth} />
                 ) : (
                   <Redirect to="/login" />
                 )
               }
             />
             <Route
-              path="/planner"
+              path="/planner/event/"
               exact
               render={(props) =>
                 isAuthenticated ? (
-                  <Planner {...props} setAuth={setAuth} />
+                  <Event {...props} setAuth={setAuth} />
                 ) : (
                   <Redirect to="/login" />
                 )
