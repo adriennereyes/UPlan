@@ -6,7 +6,7 @@ function Planner() {
     <>
       <h1>Planner Holder</h1>
       <Link to="/planner/event">
-        <li>Add event</li>
+        <p>Add event</p>
       </Link>
     </>
   );

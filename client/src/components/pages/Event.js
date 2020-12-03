@@ -22,11 +22,11 @@ function Event() {
     startMonth: "",
     startDay: "",
     startYear: "",
-    startTime: "",
+    // startTime: "",
     endMonth: "",
     endDay: "",
     endYear: "",
-    endTime: "",
+    // endTime: "",
     description: "",
   });
 
@@ -72,6 +72,7 @@ function Event() {
           body: JSON.stringify(body),
         });
         const serverRes = await response.json();
+        <Redirect to="/planner"/>
       } catch (err) {
         console.log(err);
       }
