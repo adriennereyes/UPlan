@@ -26,16 +26,18 @@ function App() {
     try {
       const response = await fetch("http://localhost:3001/verify", {
         method: "POST",
-        headers: {token: localStorage.token}
+        headers: { token: localStorage.token },
       });
 
       const parsedResponse = await response.json();
 
-      parsedResponse === true ? setIsAuthenticated(true) : setIsAuthenticated(false);
+      parsedResponse === true
+        ? setIsAuthenticated(true)
+        : setIsAuthenticated(false);
     } catch (err) {
       console.error(err.message);
     }
-  }
+  };
 
   useEffect(() => {
     checkAuth();
@@ -47,7 +49,17 @@ function App() {
         <Nav />
         <div className="App-container">
           <Switch>
-            <Route path="/" exact render={(props) => <Home {...props} />} />
+            <Route
+              path="/"
+              exact
+              render={(props) =>
+                !isAuthenticated ? (
+                  <Home {...props} />
+                ) : (
+                  <Redirect to="/planner" />
+                )
+              }
+            />
             <Route
               path="/login"
               exact
@@ -71,17 +83,6 @@ function App() {
               }
             />
             <Route
-              path="/planner"
-              exact
-              render={(props) =>
-                isAuthenticated ? (
-                  <Planner {...props} setAuth={setAuth} />
-                ) : (
-                  <Redirect to="/login" />
-                )
-              }
-            />
-            <Route
               path="/planner/event"
               exact
               render={(props) =>
@@ -92,11 +93,16 @@ function App() {
                 )
               }
             />
-            {/* Test route that allows user to add events */}
             <Route
-              path="/event"
+              path="/planner"
               exact
-              render={(props) => <Event {...props} />}
+              render={(props) =>
+                isAuthenticated ? (
+                  <Planner {...props} setAuth={setAuth} />
+                ) : (
+                  <Redirect to="/login" />
+                )
+              }
             />
           </Switch>
         </div>
