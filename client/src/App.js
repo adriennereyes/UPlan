@@ -22,6 +22,25 @@ function App() {
     setIsAuthenticated(bool);
   };
 
+  const checkAuth = async () => {
+    try {
+      const response = await fetch("http://localhost:3001/verify", {
+        method: "POST",
+        headers: {token: localStorage.token}
+      });
+
+      const parsedResponse = await response.json();
+
+      parsedResponse === true ? setIsAuthenticated(true) : setIsAuthenticated(false);
+    } catch (err) {
+      console.error(err.message);
+    }
+  }
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
+
   return (
     <Fragment>
       <Router>

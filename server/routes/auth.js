@@ -82,12 +82,12 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.get("/verify", authorization, async (req, res) => {
+router.post("/verify", authorization, async (req, res) => {
   try {
     //res.json(req.user);
     res.status(200).json(true);
   } catch (error) {
-    console.error(error);
+    console.error(error.message);
     res.sendStatus(500);
   }
 })

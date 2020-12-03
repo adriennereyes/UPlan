@@ -13,7 +13,6 @@ module.exports = async (req, res, next) => {
     req.user = payload.user;
     next();
   } catch (error) {
-    console.error(error);
     return res.status(403).json({ error: "User not authorized" });
   }
 };

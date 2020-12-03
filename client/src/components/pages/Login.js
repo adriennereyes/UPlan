@@ -33,7 +33,7 @@ const Login = ({ setAuth }) => {
       } else {
         setAuth(false);
       }
-      console.log(parsedResponse);
+      //console.log(parsedResponse);
     } catch (error) {
       console.error(error.message);
     }
