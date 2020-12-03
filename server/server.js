@@ -2,16 +2,18 @@ const express = require("express");
 const pool = require("./db");
 const authRouter = require("./routes/auth");
 const plannerRouter = require("./routes/planner");
+const cors = require("cors");
 
 const app = express();
 
 const hostname = "localhost";
-const port = 3000;
+const port = 3001;
 
 // Middleware //
+app.use(cors());
 app.use(express.json());
 
-// ROUTES //
+// MIDDLEWARE ROUTES //
 app.use('/', authRouter);
 app.use('/planner', plannerRouter);
 

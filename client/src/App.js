@@ -1,32 +1,78 @@
-
-
-////////////////////////////////////////
-import React, {Fragment} from "react";
-import './App.css';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import React, { Fragment, useState, useEffect } from "react";
+import "./App.css";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 
 //imports for login components
-import Login from "./Login";
-import Home from "./Home";
-import Register from "./Register";
-import Nav from "./Nav";
-import Empty from "./empty";
-import Event from "./Event";
-import Planner from "./planner";
+import Login from "./components/pages/Login";
+import Home from "./components/pages/Home";
+import Register from "./components/pages/Register";
+import Nav from "./components/Nav";
+import Planner from "./components/pages/Planner";
+import Event from "./components/pages/Event";
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const setAuth = (bool) => {
+    setIsAuthenticated(bool);
+  };
+
   return (
     <Fragment>
       <Router>
         <Nav />
-        <div className = "App container" > 
+        <div className="App-container">
           <Switch>
-            <Route path="/" exact component={Home} />
-            <Route path="/login" component={Login}  />
-            <Route path="/register" component={Register} />
-            <Route path="/empty" component={Empty} />
-            <Route path="/event" component={Event} />
-            <Route path="/planner" component={Planner} />
+            <Route path="/" exact render={(props) => <Home {...props} />} />
+            <Route
+              path="/login"
+              exact
+              render={(props) =>
+                !isAuthenticated ? (
+                  <Login {...props} setAuth={setAuth} />
+                ) : (
+                  <Redirect to="/planner" />
+                )
+              }
+            />
+            <Route
+              path="/register"
+              exact
+              render={(props) =>
+                !isAuthenticated ? (
+                  <Register {...props} setAuth={setAuth} />
+                ) : (
+                  <Redirect to="/login" />
+                )
+              }
+            />
+            <Route
+              path="/planner"
+              exact
+              render={(props) =>
+                isAuthenticated ? (
+                  <Planner {...props} setAuth={setAuth} />
+                ) : (
+                  <Redirect to="/login" />
+                )
+              }
+            />
+            <Route
+              path="/planner/event"
+              exact
+              render={(props) =>
+                isAuthenticated ? (
+                  <Event {...props} setAuth={setAuth} />
+                ) : (
+                  <Redirect to="/login" />
+                )
+              }
+            />
           </Switch>
         </div>
       </Router>
