@@ -73,6 +73,12 @@ function App() {
                 )
               }
             />
+            {/* Test route that allows user to add events */}
+            <Route
+              path="/event"
+              exact
+              render={(props) => <Event {...props} />}
+            />
           </Switch>
         </div>
       </Router>
