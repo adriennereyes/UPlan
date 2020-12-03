@@ -56,8 +56,8 @@ function Event() {
     const body = {
       title: fields.title,
       description: fields.description,
-      startDate: `${fields.startMonth}/${fields.startDay}/${fields.startYear}`,
-      endDate: `${fields.endMonth}/${fields.endDay}/${fields.endYear}`,
+      startDate: `${fields.startYear}-${fields.startMonth}-${fields.startDay}`,
+      endDate: `${fields.endYear}-${fields.endMonth}-${fields.endDay}`,
       type: fields.type,
     };
 
