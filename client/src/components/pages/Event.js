@@ -72,7 +72,7 @@ function Event() {
           body: JSON.stringify(body),
         });
         const serverRes = await response.json();
-        <Redirect to="/planner"/>
+        window.location.href = "/planner";
       } catch (err) {
         console.log(err);
       }
