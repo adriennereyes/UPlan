@@ -64,6 +64,7 @@ function Event() {
 
     //If input is valid, send a POST request
     if (validateInput()) {
+      
       console.log("The form has been submitted");
       try {
         const response = await fetch("http://localhost:3001/planner/create", {
@@ -72,11 +73,11 @@ function Event() {
           body: JSON.stringify(body),
         });
         const serverRes = await response.json();
-        <Redirect to="/planner"/>
+        window.location.href = "/planner";
       } catch (err) {
         console.log(err);
       }
-    }
+    } 
   };
   //The HTML form loaded to the webpage
   return (
