@@ -30,6 +30,8 @@ function Event() {
     description: "",
   });
 
+  const [redirect, setRedirect] = useState(false);
+
   //Updates the text input in the fields
   const handleChange = (e) => {
     setfields({
@@ -73,7 +75,7 @@ function Event() {
           body: JSON.stringify(body),
         });
         const serverRes = await response.json();
-        window.location.href = "/planner";
+        
       } catch (err) {
         console.log(err);
       }
