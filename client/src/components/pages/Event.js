@@ -56,11 +56,17 @@ function Event() {
   const submitEvent = async (e) => {
     e.preventDefault();
 
+    const myHeaders = new Headers();
+
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("token", localStorage.token);
+
     const body = {
       title: fields.title,
       description: fields.description,
       startDate: `${fields.startYear}-${fields.startMonth}-${fields.startDay}`,
       endDate: `${fields.endYear}-${fields.endMonth}-${fields.endDay}`,
+      deleted: false,
       type: fields.type,
     };
 
@@ -70,7 +76,7 @@ function Event() {
       try {
         const response = await fetch("http://localhost:3001/planner/create", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: myHeaders,
           body: JSON.stringify(body),
         });
         const serverRes = await response.json();

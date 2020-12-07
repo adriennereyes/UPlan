@@ -13,7 +13,7 @@ CREATE TABLE planner.Users
 ALTER TABLE planner.Users
     OWNER to postgres;
 
-CREATE TYPE event as ENUM ('Class', 'Meeting', 'Task', 'Reminder');
+CREATE TYPE event as ENUM ('School', 'Work', 'Appointment', 'Party');
 
 CREATE TABLE planner.Events
 (
