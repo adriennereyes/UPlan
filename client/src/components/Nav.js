@@ -50,7 +50,7 @@ function Nav() {
             <li>Log Out</li>
           </Link>
         ) : (
-          <Link style={navStyle} to="/">
+          <Link style={navStyle} to="/login">
             <li>Log In</li>
           </Link>
         )}
