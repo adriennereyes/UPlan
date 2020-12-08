@@ -1,19 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Table, Button } from "react-bootstrap";
+import {
+  Table,
+  Button,
+  FormGroup,
+  FormControl,
+  ControlLabel,
+} from "react-bootstrap";
 import "../styles/planner.css";
 //Planner component where table will be displayed
 function Planner() {
   //Set up state variables for use with the component
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [deletedEvent, setDeletedEvent] = useState("");
 
-  const handleClick = (e) => {
-    console.log(`${e.target.value}`);
+  const handleChange = (e) => {
+    setDeletedEvent(e.target.value);
+    console.log(e.target.value);
   };
+  //Generates tbody row components
   function renderTable(event) {
     return (
-      <tr onClick={handleClick}>
+      <tr>
         <td>{event.title}</td>
         <td>{event.type}</td>
         <td>{event.description}</td>
@@ -43,18 +52,60 @@ function Planner() {
       console.log(err.message);
     }
   };
+
+  //Searches array for event to delete
+  function searchArray(arr, value) {
+    const foundIndex = arr.find((element) => element.title === value);
+    console.log(foundIndex);
+    return foundIndex;
+  }
+  //Delete request to delete the event from table
+  const deleteEvent = async (e) => {
+    e.preventDefault();
+    let event;
+    if (typeof event != undefined) {
+      try {
+        const response = await fetch(
+          `http://localhost:3001/planner/:${0}`,
+          {
+            method: "DELETE",
+            headers: { token: localStorage.token },
+          }
+        );
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+  // searchArray(events, "Sandra's Birthday Party");
   //Updates the state of the events array
   useEffect(() => {
     getEvents();
   }, []);
   return (
     <>
-      <div id="button-div" class="flex">
+      <div class="button-div flex">
         <Link to="/planner/event">
           <Button className="bg-primary text-light">Add event</Button>
         </Link>
-        <div class="delete-div">
-          <Button className="bg-danger text-light">Delete</Button>
+        <div class="delete-div flex">
+          <FormGroup bsSize="large">
+            <ControlLabel>Title</ControlLabel>
+            <FormControl
+              controlId="deletedEvent"
+              name="deletedEvent"
+              type="text"
+              value={deletedEvent}
+              onChange={handleChange}
+            ></FormControl>
+          </FormGroup>
+          <Button
+            type="submit"
+            onClick={deleteEvent}
+            className="bg-danger text-light"
+          >
+            Delete
+          </Button>
         </div>
       </div>
       <div id="table-div">

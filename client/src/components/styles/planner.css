@@ -5,10 +5,14 @@
 #table-div h1 {
   text-align: center;
 }
-#button-div{
-    margin: 1.25rem 1.25rem;
+.button-div {
+  margin: 1.25rem 1.25rem;
+  justify-content: space-between;
+  align-items: start;
+}
+.delete-div {
+  flex-direction: column;
 }
 .flex {
   display: flex;
-  justify-content: space-between;
 }
