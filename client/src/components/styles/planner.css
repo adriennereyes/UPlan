@@ -2,3 +2,13 @@
   width: 60%;
   margin: 0 auto;
 }
+#table-div h1 {
+  text-align: center;
+}
+#button-div{
+    margin: 1.25rem 1.25rem;
+}
+.flex {
+  display: flex;
+  justify-content: space-between;
+}

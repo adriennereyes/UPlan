@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Table } from "react-bootstrap";
+import { Table, Button } from "react-bootstrap";
 import "../styles/planner.css";
 //Planner component where table will be displayed
 function Planner() {
@@ -49,12 +49,17 @@ function Planner() {
   }, []);
   return (
     <>
-      <h1>Planner</h1>
-      <Link to="/planner/event">
-        <p>Add event</p>
-      </Link>
+      <div id="button-div" class="flex">
+        <Link to="/planner/event">
+          <Button className="bg-primary text-light">Add event</Button>
+        </Link>
+        <div class="delete-div">
+          <Button className="bg-danger text-light">Delete</Button>
+        </div>
+      </div>
       <div id="table-div">
-        <Table >
+        <h1>Planner</h1>
+        <Table bordered hover>
           <thead>
             <th>Title</th>
             <th>Type</th>
