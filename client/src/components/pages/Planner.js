@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Table } from "react-bootstrap";
+
 function renderTable(event) {
   return (
     <tr>
       <td>{event.title}</td>
       <td>{event.type}</td>
       <td>{event.description}</td>
-      <td>{event.start_date}</td>
-      <td>{event.end_date}</td>
+      <td>{event.start_date.toDateString()}</td>
+      <td>{event.end_date.toDateString()}</td>
     </tr>
   );
 }
+//Converts ISO string dates to objects
 function formatDate(event) {
-  event.start_date = new Date(JSON.stringify(event.start_date));
-  event.end_date = new Date(JSON.stringify(event.end_date));
+  event.start_date = new Date(event.start_date.toString());
+  event.end_date = new Date(event.end_date.toString());
 }
 //Planner component where table will be displayed
 function Planner() {
@@ -30,6 +32,7 @@ function Planner() {
         headers: { token: localStorage.token },
       });
       const parseData = await response.json();
+      parseData.events.map(formatDate);
       setEvents(parseData.events);
       setLoading(false);
     } catch (err) {
