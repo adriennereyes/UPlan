@@ -46,7 +46,7 @@ function App() {
   return (
     <Fragment>
       <Router>
-        <Nav />
+        <Nav setAuth={setAuth} isAuthenticated={isAuthenticated}/>
         <div className="App-container">
           <Switch>
             <Route

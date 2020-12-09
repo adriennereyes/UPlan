@@ -7,34 +7,16 @@ const navStyle = {
   color: "white",
 };
 
-function Nav() {
-  //Checks if the user is authenticated (Logged in)
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  const setAuth = (bool) => {
-    setIsAuthenticated(bool);
-  };
-
-  const checkAuth = async () => {
+function Nav({ setAuth, isAuthenticated }) {
+  const handleLogout = async (e) => {
+    e.preventDefault();
     try {
-      const response = await fetch("http://localhost:3001/verify", {
-        method: "POST",
-        headers: { token: localStorage.token },
-      });
-
-      const parsedResponse = await response.json();
-
-      parsedResponse === true
-        ? setIsAuthenticated(true)
-        : setIsAuthenticated(false);
-    } catch (err) {
-      console.error(err.message);
+      localStorage.removeItem("token");
+      setAuth(false);
+    } catch (error) {
+      console.log(error.message);
     }
   };
-
-  useEffect(() => {
-    checkAuth();
-  }, []);
 
   return (
     //setting up navbar. adding the links that directs to the respective path
@@ -44,19 +26,15 @@ function Nav() {
         <h3 id="title">UPlan</h3>
       </Link>
       <ul className="nav-links">
-        {/* Change login link depending on authentication state */}
-        {isAuthenticated ? (
+        {!isAuthenticated ? (
           <Link style={navStyle} to="/login">
-            <li>Log Out</li>
+            <li>Log in</li>
           </Link>
         ) : (
-          <Link style={navStyle} to="/login">
-            <li>Log In</li>
+          <Link style={navStyle} to="#">
+            <li onClick={(e) => handleLogout(e)}>Logout</li>
           </Link>
         )}
-        <Link style={navStyle} to="/register">
-          <li>Register</li>
-        </Link>
       </ul>
     </nav>
   );
