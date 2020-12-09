@@ -12,7 +12,7 @@ import "../styles/planner.css";
 function Planner() {
   //Set up state variables for use with the component
   const [events, setEvents] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setLoading] = useState(true);
   const [deletedEvent, setDeletedEvent] = useState("");
 
   const handleChange = (e) => {
@@ -22,7 +22,7 @@ function Planner() {
   //Generates tbody row components
   function renderTable(event) {
     return (
-      <tr>
+      <tr key={event.event_id}>
         <td>{event.title}</td>
         <td>{event.type}</td>
         <td>{event.description}</td>
@@ -62,22 +62,33 @@ function Planner() {
   //Delete request to delete the event from table
   const deleteEvent = async (e) => {
     e.preventDefault();
-    let event;
+    let event = searchArray(events, deletedEvent);
+    let eventList = [...events];
+    //If event is found, fetch DELETE
     if (typeof event != undefined) {
       try {
         const response = await fetch(
-          `http://localhost:3001/planner/:${0}`,
+          `http://localhost:3001/planner/${event.event_id}`,
           {
             method: "DELETE",
-            headers: { token: localStorage.token },
+            headers: {
+              "Content-Type": "application/json",
+              token: localStorage.token,
+            },
           }
         );
+        const JSONResponse = await response.json();
+
+        //Update the events array, and change state
+        let updatedEvents = eventList.filter(
+          (selectedEvent) => selectedEvent.event_id !== event.event_id
+        );
+        setEvents(updatedEvents);
       } catch (err) {
         console.log(err);
       }
     }
   };
-  // searchArray(events, "Sandra's Birthday Party");
   //Updates the state of the events array
   useEffect(() => {
     getEvents();
@@ -118,7 +129,7 @@ function Planner() {
             <th>Start Date</th>
             <th>End Date</th>
           </thead>
-          <tbody>{loading ? <p>Loading...</p> : events.map(renderTable)}</tbody>
+          <tbody>{isLoading ? <div></div> : events.map(renderTable)}</tbody>
         </Table>
       </div>
     </>
