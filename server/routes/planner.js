@@ -73,13 +73,13 @@ router.get("/:eventId", authorization, (req, res) => {
   let userId = req.user.id;
 
   pool
-    .query("SELECT * FROM planner.Events WHERE event_id = $1 AND user_id = $2", [
-      eventId,
-      userId,
-    ])
+    .query(
+      "SELECT * FROM planner.Events WHERE event_id = $1 AND user_id = $2",
+      [eventId, userId]
+    )
     .then((response) => {
       if (response.rows.length === 0) {
-        return res.status(403).json({"error": "Event does not exist"})
+        return res.status(403).json({ error: "Event does not exist" });
       }
       res.status(200).json(response.rows[0]);
     })
