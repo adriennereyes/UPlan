@@ -32,7 +32,7 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({"error": "Username or password is not valid"});
     }
 
-    // Verifies if the password matches the hashed passwors stored in our database
+    // Verifies if the password matches the hashed password stored in our database
     const hashedPassword = user.rows[0].password;
     const isSame = await bcrypt.compare(password, hashedPassword);
 
