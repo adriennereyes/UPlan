@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
-import "../App.css";
+import React from "react";
 import { Link } from "react-router-dom";
+import { FaTasks } from "react-icons/fa";
+import { toast } from 'react-toastify';
+import "./Navbar.css";
 
 //setting a variable for the style that can be applied to the objects
 const navStyle = {
@@ -13,6 +15,15 @@ function Nav({ setAuth, isAuthenticated }) {
     try {
       localStorage.removeItem("token");
       setAuth(false);
+      toast("See you next time", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+      });
     } catch (error) {
       console.log(error.message);
     }
@@ -23,12 +34,12 @@ function Nav({ setAuth, isAuthenticated }) {
     // when the item is clicked on
     <nav>
       <Link style={navStyle} to="/">
-        <h3 id="title">UPlan</h3>
+        <h3 id="title"><FaTasks />UPlan</h3>
       </Link>
       <ul className="nav-links">
         {!isAuthenticated ? (
           <Link style={navStyle} to="/login">
-            <li>Log in</li>
+            <li>Login</li>
           </Link>
         ) : (
           <Link style={navStyle} to="#">

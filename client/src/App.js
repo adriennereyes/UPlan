@@ -1,19 +1,22 @@
 import React, { Fragment, useState, useEffect } from "react";
-import "./App.css";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect,
 } from "react-router-dom";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 //imports for login components
 import Login from "./components/pages/Login";
-import Home from "./components/pages/Home";
+import Home from "./components/pages/Landing";
 import Register from "./components/pages/Register";
-import Nav from "./components/Nav";
+import Nav from "./components/Navbar";
 import Planner from "./components/pages/Planner";
 import Event from "./components/pages/Event";
+
+toast.configure();
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -46,7 +49,7 @@ function App() {
   return (
     <Fragment>
       <Router>
-        <Nav setAuth={setAuth} isAuthenticated={isAuthenticated}/>
+        <Nav setAuth={setAuth} isAuthenticated={isAuthenticated} />
         <div className="App-container">
           <Switch>
             <Route

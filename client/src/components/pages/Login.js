@@ -1,5 +1,16 @@
 import React, { useState } from "react";
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import {
+  Button,
+  Form,
+  FormGroup,
+  FormControl,
+  ControlLabel,
+  Row,
+  Col,
+} from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { toast } from 'react-toastify';
+import "../styles/Login.css";
 
 const Login = ({ setAuth }) => {
   // sets up the variable username and password to be changed once entered
@@ -30,8 +41,26 @@ const Login = ({ setAuth }) => {
       if (parsedResponse.token) {
         localStorage.setItem("token", parsedResponse.token);
         setAuth(true);
+        toast.success(parsedResponse.message, {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        });
       } else {
         setAuth(false);
+        toast.error(parsedResponse.error, {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        });
       }
       //console.log(parsedResponse);
     } catch (error) {
@@ -41,16 +70,20 @@ const Login = ({ setAuth }) => {
 
   return (
     <div className="userPassDiv">
-      <form className="registerForm" onSubmit={Login}>
-        <FormGroup controlId="username" bsSize="large">
-          <ControlLabel id="label">Username</ControlLabel>
-          <FormControl
-            id="username"
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </FormGroup>
+      <Form className="loginForm" onSubmit={Login}>
+        <Row>
+          <Col sm={12}>
+            <FormGroup controlId="username" bsSize="large">
+              <ControlLabel id="label">Username</ControlLabel>
+              <FormControl
+                id="username"
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </FormGroup>
+          </Col>
+        </Row>
         <FormGroup controlId="password" bsSize="large">
           <ControlLabel id="label">Password</ControlLabel>
           <FormControl
@@ -61,11 +94,17 @@ const Login = ({ setAuth }) => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </FormGroup>
-
-        <Button block bsSize="large" disabled={!validateForm()} type="submit">
+        <Button
+          block
+          bsSize="large"
+          className="success"
+          disabled={!validateForm()}
+          type="submit"
+        >
           Login
         </Button>
-      </form>
+        <Link to="/register">Don't have an account?</Link>
+      </Form>
     </div>
   );
 };

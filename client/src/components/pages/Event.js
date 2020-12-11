@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Button,
   Form,
@@ -8,12 +8,9 @@ import {
   Row,
   Col,
 } from "react-bootstrap";
-import { Redirect } from "react-router-dom";
-
-import "./event.css";
+import "../styles/Event.css";
 
 //Function that creates Event component
-
 function Event() {
   //Sets the original state of the form fields
   const [fields, setfields] = useState({
@@ -29,8 +26,6 @@ function Event() {
     // endTime: "",
     description: "",
   });
-
-  const [redirect, setRedirect] = useState(false);
 
   //Updates the text input in the fields
   const handleChange = (e) => {
@@ -90,13 +85,13 @@ function Event() {
   //The HTML form loaded to the webpage
   return (
     <>
-      <div class="eventDiv">
-        <div class="header text-center">
+      <div className="eventDiv">
+        <div className="header text-center">
           <h1>Add Event</h1>
         </div>
         <Form onSubmit={submitEvent}>
           <Row>
-            <Col sm="12">
+            <Col sm={12}>
               <FormGroup bsSize="large">
                 <ControlLabel>Title</ControlLabel>
                 <FormControl
@@ -108,7 +103,7 @@ function Event() {
                 ></FormControl>
               </FormGroup>
             </Col>
-            <Col sm="12">
+            <Col sm={12}>
               <FormGroup bsSize="large">
                 <ControlLabel>Event Type</ControlLabel>
                 <select
@@ -128,7 +123,7 @@ function Event() {
                 </select>
               </FormGroup>
             </Col>
-            <Col sm="4">
+            <Col sm={4}>
               <FormGroup bsSize="large">
                 <ControlLabel>Start Month</ControlLabel>
                 <select
@@ -154,7 +149,7 @@ function Event() {
                 </select>
               </FormGroup>
             </Col>
-            <Col sm="4">
+            <Col sm={4}>
               <FormGroup bsSize="large">
                 <ControlLabel>Start Day</ControlLabel>
                 <select
@@ -199,7 +194,7 @@ function Event() {
                 </select>
               </FormGroup>
             </Col>
-            <Col sm="4">
+            <Col sm={4}>
               <FormGroup bsSize="large">
                 <ControlLabel>Start Year</ControlLabel>
                 <FormControl
@@ -211,19 +206,7 @@ function Event() {
                 ></FormControl>
               </FormGroup>
             </Col>
-            {/* <Col sm="3">
-              <FormGroup bsSize="large">
-                <ControlLabel>Start Time</ControlLabel>
-                <FormControl
-                  controlId="start-time"
-                  type="time"
-                  name="startTime"
-                  value={fields.startTime}
-                  onChange={handleChange}
-                ></FormControl>
-              </FormGroup>
-            </Col> */}
-            <Col sm="4">
+            <Col sm={4}>
               <FormGroup bsSize="large">
                 <ControlLabel>End Month</ControlLabel>
                 <select
@@ -233,8 +216,7 @@ function Event() {
                   value={fields.endMonth}
                   onChange={handleChange}
                 >
-                  <option selected> </option>
-
+                  <option selected></option>
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
@@ -250,7 +232,7 @@ function Event() {
                 </select>
               </FormGroup>
             </Col>
-            <Col sm="4">
+            <Col sm={4}>
               <FormGroup bsSize="large">
                 <ControlLabel>End Day</ControlLabel>
                 <select
@@ -261,7 +243,6 @@ function Event() {
                   onChange={handleChange}
                 >
                   <option selected value="Choose"></option>
-
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
@@ -296,7 +277,7 @@ function Event() {
                 </select>
               </FormGroup>
             </Col>
-            <Col sm="4">
+            <Col sm={4}>
               <FormGroup bsSize="large">
                 <ControlLabel>End Year</ControlLabel>
                 <FormControl
@@ -308,19 +289,7 @@ function Event() {
                 ></FormControl>
               </FormGroup>
             </Col>
-            {/* <Col sm="3">
-              <FormGroup bsSize="large">
-                <ControlLabel>End Time</ControlLabel>
-                <FormControl
-                  controlId="end-time"
-                  type="time"
-                  name="endTime"
-                  value={fields.endTime}
-                  onChange={handleChange}
-                ></FormControl>
-              </FormGroup>
-            </Col> */}
-            <Col sm="12">
+            <Col sm={12}>
               <FormGroup bsSize="large">
                 <ControlLabel>Description</ControlLabel>
                 <FormControl
@@ -334,7 +303,7 @@ function Event() {
             </Col>
           </Row>
 
-          <Button blockbSize="large" variant="primary" type="submit">
+          <Button block bsSize="large" variant="primary" type="submit">
             Add Event
           </Button>
         </Form>

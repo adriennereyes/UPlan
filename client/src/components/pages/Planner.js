@@ -7,7 +7,8 @@ import {
   FormControl,
   ControlLabel,
 } from "react-bootstrap";
-import "../styles/planner.css";
+import { toast } from "react-toastify";
+import "../styles/Planner.css";
 //Planner component where table will be displayed
 function Planner() {
   //Set up state variables for use with the component
@@ -17,7 +18,6 @@ function Planner() {
 
   const handleChange = (e) => {
     setDeletedEvent(e.target.value);
-    console.log(e.target.value);
   };
   //Generates tbody row components
   function renderTable(event) {
@@ -56,7 +56,6 @@ function Planner() {
   //Searches array for event to delete
   function searchArray(arr, value) {
     const foundIndex = arr.find((element) => element.title === value);
-    console.log(foundIndex);
     return foundIndex;
   }
   //Delete request to delete the event from table
@@ -79,6 +78,28 @@ function Planner() {
         );
         const JSONResponse = await response.json();
 
+        if (JSONResponse.hasOwnProperty("message")) {
+          toast.success(JSONResponse.message, {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+          });
+        } else {
+          toast.error(JSONResponse.error, {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+          });
+        }
+
         //Update the events array, and change state
         let updatedEvents = eventList.filter(
           (selectedEvent) => selectedEvent.event_id !== event.event_id
@@ -95,11 +116,11 @@ function Planner() {
   }, []);
   return (
     <>
-      <div class="button-div flex">
+      <div className="button-div flex">
         <Link to="/planner/event">
           <Button className="bg-primary text-light">Add event</Button>
         </Link>
-        <div class="delete-div flex">
+        <div className="delete-div flex">
           <FormGroup bsSize="large">
             <ControlLabel>Title</ControlLabel>
             <FormControl

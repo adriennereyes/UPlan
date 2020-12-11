@@ -18,6 +18,7 @@ router.post("/create", authorization, (req, res) => {
     type: eventType,
   } = req.body;
 
+  // Checks if the request has the valid keys and values
   if (
     !body.hasOwnProperty("title") ||
     !body.hasOwnProperty("description") ||
@@ -131,12 +132,16 @@ router.delete("/:eventId", authorization, (req, res) => {
   let userId = req.user.id;
 
   pool
-    .query("DELETE FROM planner.Events WHERE event_id = $1 AND user_id = $2", [
+    .query("DELETE FROM planner.Events WHERE event_id = $1 AND user_id = $2 RETURNING *", [
       eventId,
       userId,
     ])
     .then((response) => {
-      res.status(200).json({ message: "Successfully deleted event!" });
+      if (response.rows.length === 0) {
+        res.status(403).json({ error: "Event does not exist" });
+      } else {
+        res.status(200).json({ message: "Successfully deleted event"})
+      }
     })
     .catch((error) => {
       res.sendStatus(500);

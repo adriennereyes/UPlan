@@ -9,7 +9,8 @@ function jwtGen(user_id) {
     }
   };
 
-  return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "24hrs" });
+  // Creates jwt token for a new user
+  return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "2h" });
 }
 
 module.exports = jwtGen;

@@ -15,15 +15,28 @@ router.post("/login", async (req, res) => {
     let body = req.body;
     let {username, password } = body;
 
+    // Checks if the request has the valid keys and values
+    if (
+      !body.hasOwnProperty("username") ||
+      !(typeof username === "string") ||
+      !body.hasOwnProperty("password") ||
+      !(typeof password === "string")
+    ) {
+      return res.sendStatus(400);
+    }
+
     const user = await pool.query("SELECT * FROM planner.Users WHERE username = $1", [username]);
 
+    // Checks if user exists
     if (user.rows.length === 0) {
       return res.status(401).json({"error": "Username or password is not valid"});
     }
 
+    // Verifies if the password matches the hashed passwors stored in our database
     const hashedPassword = user.rows[0].password;
     const isSame = await bcrypt.compare(password, hashedPassword);
 
+    // Checks if user input matches the correct credentials
     if (isSame) {
       const token = jwtGen(user.rows[0].user_id);
       return res.status(200).json({"message": "Successfully logged in", token});
@@ -41,17 +54,23 @@ router.post("/register", async (req, res) => {
   try {
     //1. Destruct req.body (username,password)
     let body = req.body;
-    let { username, password } = body;
+    let { username, password, passwordConfirm } = body;
 
+    // Checks if the request has the valid keys and values
     if (
       !body.hasOwnProperty("username") ||
       !body.hasOwnProperty("password") ||
+      !body.hasOwnProperty("passwordConfirm") ||
       !(typeof username === "string") ||
       !(typeof password === "string") ||
       !(username.length >= 5 && username.length <= 30) ||
       !(password.length >= 8 && password.length <= 36)
     ) {
       return res.status(401).json({ "error": "One or more input fields is invalid" });
+    }
+
+    if (!(password === passwordConfirm)) {
+      return res.status(401).json({ "error": "Passwords do not match" });
     }
 
     //2. Check if user already exists (if user exists then throw error)
